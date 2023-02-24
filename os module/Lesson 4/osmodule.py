@@ -231,8 +231,12 @@ def main(chooser):
         print(" \033[1m" + "\033[33m" + "   [*]" + "\033[32m" + "OS name:" + "\033[0m" + uname.sysname + " " + uname.machine + " " + os.name)
         print(" \033[1m" + "\033[33m" + "   [*]" + "\033[32m" + "OS version:" + "\033[0m" + uname.version)
         print(" \033[1m" + "\033[33m" + "   [*]" + "\033[32m" + "Kernel:" + "\033[0m" + uname.release)
-        print(" \033[1m" + "\033[33m" + "   [*]" + "\033[32m" + "CPU:" + "\033[0m" + os.popen("cat /proc/cpuinfo | grep 'model name' | uniq").readline().strip().split(": ")[1])
-        print("\033[33m" + "      [*]" + "\033[32m" + "CPU cores: " + str(os.cpu_count()) + "\033[0m")
+        if uname.sysname == "Darwin":
+            print(" \033[1m" + "\033[33m" + "   [*]" + "\033[32m" + "CPU:" + "\033[0m" + os.popen("sysctl -n machdep.cpu.brand_string").read().strip())
+            print("\033[33m" + "      [*]" + "\033[32m" + "CPU cores: " + str(os.cpu_count()) + "\033[0m")
+        elif uname.sysname == "Linux":
+            print(" \033[1m" + "\033[33m" + "   [*]" + "\033[32m" + "CPU:" + "\033[0m" + os.popen("cat /proc/cpuinfo | grep 'model name' | uniq").readline().strip().split(": ")[1])
+            print("\033[33m" + "      [*]" + "\033[32m" + "CPU cores: " + str(os.cpu_count()) + "\033[0m")
         print()
         print("\033[1m" + "\033[36m" + " if you want to go back type 'back'." + "\033[0m")
         print()
