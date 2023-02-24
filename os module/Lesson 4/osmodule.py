@@ -244,7 +244,7 @@ def main(chooser):
         if user_input == "back":
             chooser = choose()
             main(chooser)
-    elif chooser == "3":
+        elif chooser == "3":
         print("----------------------------------")
         print()
         print("Process Managament:")
@@ -254,16 +254,15 @@ def main(chooser):
         print()
         print("\033[36m" + " if you want to go back type 'back'." + "\033[0m")
         print()
-        user_input = input("~$: ")
-        if user_input == "back":
-            chooser = choose()
-            main(chooser)
         while True:
-            user_input = input("What would you like to do?: ")
+            user_input = input("~$: ")
             if user_input not in ['1', '2', 'back']:
                 print("Invalid input, please try again.")
             else:
                 break
+        if user_input == "back":
+            chooser = choose()
+            main(chooser)
         if user_input == "1":
             user_name = input("What is your user name?:")
             process_list = os.popen(f"ps -u {user_name} -o pid,cmd").read()
