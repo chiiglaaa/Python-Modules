@@ -244,40 +244,40 @@ def main(chooser):
         if user_input == "back":
             chooser = choose()
             main(chooser)
-        elif chooser == "3":
-        print("----------------------------------")
+    elif chooser == "3":
+    print("----------------------------------")
+    print()
+    print("Process Managament:")
+    print()
+    print(" \033[1m" + "\033[33m" + "   1)" + "\033[32m" + "Show running processes.")
+    print(" \033[1m" + "\033[33m" + "   2)" + "\033[32m" + "Kill process.")
+    print()
+    print("\033[36m" + " if you want to go back type 'back'." + "\033[0m")
+    print()
+    while True:
+        user_input = input("~$: ")
+        if user_input not in ['1', '2', 'back']:
+            print("Invalid input, please try again.")
+        else:
+            break
+    if user_input == "back":
+        chooser = choose()
+        main(chooser)
+    if user_input == "1":
+        user_name = input("What is your user name?:")
+        process_list = os.popen(f"ps -u {user_name} -o pid,cmd").read()
+        print(process_list)
         print()
-        print("Process Managament:")
-        print()
-        print(" \033[1m" + "\033[33m" + "   1)" + "\033[32m" + "Show running processes.")
-        print(" \033[1m" + "\033[33m" + "   2)" + "\033[32m" + "Kill process.")
-        print()
-        print("\033[36m" + " if you want to go back type 'back'." + "\033[0m")
-        print()
-        while True:
-            user_input = input("~$: ")
-            if user_input not in ['1', '2', 'back']:
-                print("Invalid input, please try again.")
-            else:
-                break
-        if user_input == "back":
-            chooser = choose()
-            main(chooser)
-        if user_input == "1":
-            user_name = input("What is your user name?:")
-            process_list = os.popen(f"ps -u {user_name} -o pid,cmd").read()
-            print(process_list)
-            print()
+        exit()
+    if user_input == "2":
+        id_input = int(input("What is the process id you want to kill?: "))
+        try:
+            os.kill(id_input, 0)
+            os.kill(id_input, 9)
+            print(f"Process with PID {id_input} has been terminated.")
             exit()
-        if user_input == "2":
-            id_input = int(input("What is the process id you want to kill?: "))
-            try:
-                os.kill(id_input, 0)
-                os.kill(id_input, 9)
-                print(f"Process with PID {id_input} has been terminated.")
-                exit()
-            except OSError as e:
-                print(f"Process with PID {id_input} does not exist or could not be terminated: {e}")
-                exit()
+        except OSError as e:
+            print(f"Process with PID {id_input} does not exist or could not be terminated: {e}")
+            exit()
 
 main(chooser)
