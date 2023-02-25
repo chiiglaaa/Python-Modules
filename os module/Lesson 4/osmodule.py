@@ -298,7 +298,7 @@ def main(chooser):
                         print(f"Process with PID {id_input} has been terminated.")
                         while True:
                             user_input = input("~$: ")
-                            if user_input not in ['1', '2', 'back']:
+                            if user_input not in ['back']:
                                 print("Invalid input, please try again.")
                             else:
                                 break
