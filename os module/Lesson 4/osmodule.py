@@ -25,6 +25,7 @@ def choose():
 print("----------------------------------")
 chooser = choose()
 
+
 def main(chooser):
     if chooser == "q":
         print("----------------------------------")
@@ -223,20 +224,26 @@ def main(chooser):
                 print("File moved successfully.")
                 exit()
     elif chooser == "2":
-        print("----------------------------------")
-        print()
-        print("Information about your system:")
-        uname = os.uname()
-        print()
-        print(" \033[1m" + "\033[33m" + "   [*]" + "\033[32m" + "OS name:" + "\033[0m" + uname.sysname + " " + uname.machine + " " + os.name)
-        print(" \033[1m" + "\033[33m" + "   [*]" + "\033[32m" + "OS version:" + "\033[0m" + uname.version)
-        print(" \033[1m" + "\033[33m" + "   [*]" + "\033[32m" + "Kernel:" + "\033[0m" + uname.release)
-        if uname.sysname == "Darwin":
-            print(" \033[1m" + "\033[33m" + "   [*]" + "\033[32m" + "CPU:" + "\033[0m" + os.popen("sysctl -n machdep.cpu.brand_string").read().strip())
-            print("\033[33m" + "      [*]" + "\033[32m" + "CPU cores: " + str(os.cpu_count()) + "\033[0m")
-        elif uname.sysname == "Linux":
-            print(" \033[1m" + "\033[33m" + "   [*]" + "\033[32m" + "CPU:" + "\033[0m" + os.popen("cat /proc/cpuinfo | grep 'model name' | uniq").readline().strip().split(": ")[1])
-            print("\033[33m" + "      [*]" + "\033[32m" + "CPU cores: " + str(os.cpu_count()) + "\033[0m")
+        if os.name == "nt":
+            print("\033[31m" + "Not available on Windows:(" + "\033[0m")
+        else:
+            print("----------------------------------")
+            print()
+            print("Information about your system:")
+            uname = os.uname()
+            print()
+            print(
+                " \033[1m" + "\033[33m" + "   [*]" + "\033[32m" + "OS name:" + "\033[0m" + uname.sysname + " " + uname.machine + " " + os.name)
+            print(" \033[1m" + "\033[33m" + "   [*]" + "\033[32m" + "OS version:" + "\033[0m" + uname.version)
+            print(" \033[1m" + "\033[33m" + "   [*]" + "\033[32m" + "Kernel:" + "\033[0m" + uname.release)
+            if uname.sysname == "Darwin":
+                print(" \033[1m" + "\033[33m" + "   [*]" + "\033[32m" + "CPU:" + "\033[0m" + os.popen(
+                    "sysctl -n machdep.cpu.brand_string").read().strip())
+                print("\033[33m" + "      [*]" + "\033[32m" + "CPU cores: " + str(os.cpu_count()) + "\033[0m")
+            elif uname.sysname == "Linux":
+                print(" \033[1m" + "\033[33m" + "   [*]" + "\033[32m" + "CPU:" + "\033[0m" +
+                      os.popen("cat /proc/cpuinfo | grep 'model name' | uniq").readline().strip().split(": ")[1])
+                print("\033[33m" + "      [*]" + "\033[32m" + "CPU cores: " + str(os.cpu_count()) + "\033[0m")
         print()
         print("\033[1m" + "\033[36m" + " if you want to go back type 'back'." + "\033[0m")
         print()
@@ -245,39 +252,68 @@ def main(chooser):
             chooser = choose()
             main(chooser)
     elif chooser == "3":
-    print("----------------------------------")
-    print()
-    print("Process Managament:")
-    print()
-    print(" \033[1m" + "\033[33m" + "   1)" + "\033[32m" + "Show running processes.")
-    print(" \033[1m" + "\033[33m" + "   2)" + "\033[32m" + "Kill process.")
-    print()
-    print("\033[36m" + " if you want to go back type 'back'." + "\033[0m")
-    print()
-    while True:
-        user_input = input("~$: ")
-        if user_input not in ['1', '2', 'back']:
-            print("Invalid input, please try again.")
+        if os.name == "nt":
+            print("\033[31m" + "Not available on Windows:(" + "\033[0m")
         else:
-            break
-    if user_input == "back":
-        chooser = choose()
-        main(chooser)
-    if user_input == "1":
-        user_name = input("What is your user name?:")
-        process_list = os.popen(f"ps -u {user_name} -o pid,cmd").read()
-        print(process_list)
-        print()
-        exit()
-    if user_input == "2":
-        id_input = int(input("What is the process id you want to kill?: "))
-        try:
-            os.kill(id_input, 0)
-            os.kill(id_input, 9)
-            print(f"Process with PID {id_input} has been terminated.")
-            exit()
-        except OSError as e:
-            print(f"Process with PID {id_input} does not exist or could not be terminated: {e}")
-            exit()
+            print("----------------------------------")
+            print()
+            print("Process Managament:")
+            print()
+            print(" \033[1m" + "\033[33m" + "   1)" + "\033[32m" + "Show running processes.")
+            print(" \033[1m" + "\033[33m" + "   2)" + "\033[32m" + "Kill process.")
+            print()
+            print("\033[36m" + " if you want to go back type 'back'." + "\033[0m")
+            print()
+            while True:
+                user_input = input("~$: ")
+                if user_input not in ["1", "2", "back"]:
+                    print("Invalid input, please try again.")
+                else:
+                    break
+            if user_input == "back":
+                chooser = choose()
+                main(chooser)
+            if user_input == "1":
+                user_name = input("What is your user name?:")
+                process_list = os.popen(f"ps -u {user_name} -o pid,cmd").read()
+                print(process_list)
+                print()
+                while True:
+                    user_input = input("~$: ")
+                    if user_input not in ['1', '2', 'back']:
+                        print("Invalid input, please try again.")
+                    else:
+                        break
+                if user_input == "back":
+                    main(chooser="3")
+            if user_input == "2":
+                id_input = input("What is the process id you want to kill?: ")
+                if id_input == "back":
+                    main(chooser="3")
+                else:
+                    id_input = int(id_input)
+                    try:
+                        os.kill(id_input, 0)
+                        os.kill(id_input, 9)
+                        print(f"Process with PID {id_input} has been terminated.")
+                        while True:
+                            user_input = input("~$: ")
+                            if user_input not in ['1', '2', 'back']:
+                                print("Invalid input, please try again.")
+                            else:
+                                break
+                        if user_input == "back":
+                            main(chooser="3")
+                    except OSError as e:
+                        print(f"Process with PID {id_input} does not exist or could not be terminated: {e}")
+                        while True:
+                            user_input = input("~$: ")
+                            if user_input not in ['back']:
+                                print("Invalid input, please try again.")
+                            else:
+                                break
+                        if user_input == "back":
+                            main(chooser="3")
+
 
 main(chooser)
