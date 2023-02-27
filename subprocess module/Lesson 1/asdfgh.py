@@ -51,11 +51,16 @@ def main(choice):
             main(choice)
         elif cmd == "ls":
             print("\033[31m" + "USE man ls COMMAND BEFORE USING ANY ARGUMENT." + "\033[0m")
-            check = True:
+            check = True
             error_result = ["ls: cannot access", "ls: invalid line width", "ls: option requires an argument"]
             while True:
-            specify_cmd = input("Do you want to use specific arguments? (y/n): ")
-                if specify_cmd.lower() == 'y':
+                specify_cmd = input("Do you want to use specific arguments? (y/n): ")
+                if specify_cmd.lower() == 'n':
+                    result = subprocess.run(['ls'], stdout=subprocess.PIPE)
+                    output = result.stdout.decode('utf-8')
+                    print("\033[34m" + output + "\033[0m")
+                    break
+                elif specify_cmd.lower() == 'y':
                     while True:
                         which_cmd = input("Which argument would you like to add?(To exit type) 'exit': ")
                         if which_cmd == 'exit':
@@ -65,9 +70,10 @@ def main(choice):
                             output = result.stdout.decode('utf-8')
                             print("\033[34m" + output + "\033[0m")
                             for e in error_result:
-                                if e in result:
+                                if e in str(result):
                                     print("[!] invalid argument. try again")
                                     break
+                    break
             main(choice="1")
         elif cmd == "pwd":
             result = subprocess.run(['pwd'], stdout=subprocess.PIPE)
