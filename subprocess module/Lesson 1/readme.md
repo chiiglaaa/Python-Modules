@@ -4,21 +4,34 @@
 ------------------------------------
 used functions in this lesson:
 
-    subprocess.run() - this function is used to run a command as a subprocess and capture its output, exit status, and any errors that occur during execution.
+    subprocess.run() - this function is used to run a command as a subprocess and capture its output, exit status,
+ and any errors that occur during execution.
     
-    stdout = subprocess.PIPE - stdout stands for "standart output". stdout is where a program or command sends its normal output when its run.when you run a program or command in a terminal or command prompt, the output that is printed to the screen is usually the output sent to stdout.this output can be redirected to a file, a pipe, or another program using various Unix commands or Python functions like subprocess.run()
+    .PIPE - In Unix-like operating systems, a pipe is a mechanism for inter-process communication(IPC) that
+ allows the output of one process to be directed as input to another process. A pipe is represented by the "|" symbol
+ and can be used to chain together multiple commands or processes so that the output of one is passed as input to the
+ next.(for example these two commands: "ps aux" and "grep user" would look like this: "ps aux | grep user")
     
-    .PIPE, pipe - In Unix-like operating systems, a pipe is a mechanism for inter-process communication(IPC) that allows the output of one process to be directed as input to another process. A pipe is represented by the "|" symbol and can be used to chain together multiple commands or processes so that the output of one is passed as input to the next.(for example these two commands: "ps aux" and "grep user" would look like this: "ps aux | grep user")
+    subprocess.Popen() - this function is used to launch a new process and execute a command in a similar way to
+ subprocess.run(), but with more control over how the subprocess is launched and how its output is handeled. Unlike
+ subprocess.run(), which waits for the command ro complete and returns a 'CompletedProcess' object, subprocess.Popen()
+ returns a Popen object that represents the running subprocess and can be used to interact with it in various ways.
     
-    subprocess.Popen() - this function is used to launch a new process and execute a command in a similar way to subprocess.run(), but with more control over how the subprocess is launched and how its output is handeled. Unlike subprocess.run(), which waits for the command ro complete and returns a 'CompletedProcess' object, subprocess.Popen() returns a Popen object that represents the running subprocess and can be used to interact with it in various ways.
-    
-    stderr = subprocess.STDOUT - this is an argument that can be passed to the subprocess.Popen() function to redirect the standart error stream of a subprocess to the same pipe as the standart output stream.if any error messages or output that a subprocess generates will be redirected to the same place as its regular output, making it easier to capture and handle both types of output together.(for example if we run a command that generates both regular output and error messages, we might want to use stderr = subprocess.STDOUT to redirect eroor messages to the same place as the regular outputs so that you can capture and process them together. Thic can be useful for error logging or debuggind purposes, among other things.)
+    stderr - this stands for "standart error" and is a stream used by a process to write error messages or diagnostics. When a process writes to "stderr", the output is diplayed on the console or redirected to a file separately from "stdout", so that errors and regular output can be distinguished.
+#yes you can use stderr function without stdout function.
+    stdout - stands for "standart output" and is a stream used by a process to write regular output. When a process writes to "stdout", the output is displayed on the console or redirected to a file.
 
-    p.stdout - is a file-like object that represents the standart output stream of a subprocess.
+    stdin - stands for "standart input" and is a stream used by a process to read input from the user or from a file.
+When a process reads from "stdin", it is reading input that has been redirected from the console or from a file. 
 
-    iter() - is a built-in Python function that takes an iterator(in this case, the readline() method) and a sentinel value(in this case, the byte string 'b'''), and returns an iterator that generates the same values as the original iterator until the sentinel value is reached.
+    iter() - is a built-in Python function that takes an iterator(in this case, the readline() method) and a sentinel
+ value(in this case, the byte string 'b'''), and returns an iterator that generates the same values as the original
+ iterator until the sentinel value is reached.
     
-    
+    #The main difference between subprocess.Popen() and subprocess.run() functions is that subprocess.Popen() offers
+   more flexibility and control over the launched process. 
+  subprocess.run() is a higher-level function that is easier to use.
+
 ------------------------------------
 
 example of subprocess.run():
@@ -75,7 +88,13 @@ Output will be:
     output = result.stdout.decode('utf-8')
     print(output)
 
-Output will be:
+Output will be:  
+                 (instead of "user user" there will be your user name.)
+                 (i changed .txt file to "textfile", directory names into "directory")
+                 (.py files into "pythonfile")
+    #rwx - is the permissions. r - read, w - write, x - execute.
+    #if we are checking dictionary permissions it will have 'd' in the very left side.
+    #first 'rwx' is for user, second 'rwx' is for groups, third 'rwx' is for other.
 
     total 496
     -rw-rw-r-- 1 user user   1658 Dec 19 03:20 textfile0
@@ -174,3 +193,97 @@ Output will be:
     64 bytes from sof04s07-in-f14.1e100.net (142.251.141.46): icmp_seq=7 ttl=113 time=53.4 ms
 
 ------------------------------------
+
+Examples of "stdout" "stderr" and "stdin":
+
+    #run the "ls" command and capture its output and errors using "stdout" and "stderr" functions.
+    p = subprocess.Popen(['ls'], stdout=subprocess.PIPE), stderr=subprocess.PIPE)
+    
+    #read the captured output and errors.
+    output, errors = p.communicate()
+    
+    #lets print them individually.
+    print('Output:', output.decode())
+    print('Errors:', errors.decode())
+
+Output will be:
+
+    Output: abcd.py
+    ANSI codes
+    binary.py
+    bubble_sorting.py
+    caesar_bruteforce.py
+    caesar_cypher.py
+    cryptotest.py
+    dictionary
+    dict.py
+    fibo_google_rec.py
+    fibonacci_itterative.py
+    fibonacci_recursive.py
+    flappuchino
+    insertion_sorting.py
+    lib
+    linear_searching.py
+    local
+    merge_sorting.py
+    merge_sort.py
+    os_module.py
+    osmodule.py
+    otp.py
+    __pycache__
+    pyvenv.cfg
+    sbps.py
+    sentinel_linear_search.py
+    ternery_searching.py
+    ternerysearch.py
+    test2.py
+    test3.py
+    test4.py
+    test5.py
+    test.py
+    vigenere_cracking.py
+    vigenere_cypher.py
+    vigenereModule.py
+    word_count.py
+
+    Errors: 
+
+------------------------------------
+
+If we want to get error message we can modify a code little bit:
+
+    #run the "ls" command and capture its output and errors
+    p = subprocess.Popen(['ls', 'nonexistent_file'], stdout=subprocess.PIPE, stderr = subprocess.PIPE)
+    
+    output, errors = p.communicate()
+    
+    print('Output:', output.decode())
+    print('Errors:', errors.decode())
+
+Output will be:
+
+    Output: 
+    Errors: ls: cannot access 'nonexistent_file': No such file or directory
+
+------------------------------------
+
+So stdout function is catching the output and stderr function is catching errors.
+
+------------------------------------
+
+Lets see "stdin" function in action:
+
+    #run the "grep" command to search for a pattern in input provided via stdin
+    p = subprocess.Popen(['grep', 'hello'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+
+    #provide input to the subprocess via stdin
+    input_str = "hello world\nhello python\nbye python\nbye\n"
+    output, _ = p.communicate(input=input_str.encode())
+
+    #print the captured output
+    print('Output:', output.decode())
+
+Output will be:
+
+    Output: hello world
+    hello python
