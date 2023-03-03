@@ -42,7 +42,7 @@ def main(choice):
         print("\033[31m" + "Available commands: " + "\033[33m" + "ls, pwd, whoami, date, cat, echo" + "\033[0m")
         while True:
             cmd = input("Which command would you like to run?: ")
-            if cmd not in ['ls', 'pwd', 'whoami', 'date', 'cat', 'echo', 'python', 'back']:
+            if cmd not in ['ls', 'pwd', 'whoami', 'date', 'cat', 'echo', 'back']:
                 print("Invalid input. Please try again.")
             else:
                 break
@@ -51,7 +51,6 @@ def main(choice):
             main(choice)
         elif cmd == "ls":
             print("\033[31m" + "USE man ls COMMAND BEFORE USING ANY ARGUMENT." + "\033[0m")
-            check = True
             error_result = ["ls: cannot access", "ls: invalid line width", "ls: option requires an argument"]
             while True:
                 specify_cmd = input("Do you want to use specific arguments? (y/n): ")
@@ -74,6 +73,11 @@ def main(choice):
                                     print("[!] invalid argument. try again")
                                     break
                     break
+                else:
+                    result = subprocess.run(["ls"], stdout=subprocess.PIPE)
+                    output = result.stdout.decode('utf-8')
+                    print(output)
+                break
             main(choice="1")
         elif cmd == "pwd":
             result = subprocess.run(['pwd'], stdout=subprocess.PIPE)
@@ -111,16 +115,53 @@ def main(choice):
             print()
             print("\033[34m" + output + "\033[0m")
             main(choice='1')
-        else:
-            print()
-            print("\033[31m" + "Invalid input" + "\033[0m")
-            main(choice='1')
     elif choice == "2":
-        print("In development.")
-        for i in range(50):
-            print()
-        choice = welcome()
-        main(choice)
+        print()
+        print("----------------------------------")
+        print()
+        print("    " + "\033[1m" + "\033[31m" + "to quit type 'back'." + "\033[0m")
+        print("\033[31m" + "Available commands: " + "\033[33m" + "ls, ping" + "\033[0m")
+        while True:
+            cmd = input("Which command would you like to run?: ")
+            if cmd not in ['ls', 'ping', 'back']:
+                print("Invalid input. Please try again.")
+            else:
+                break
+        if cmd == "back":
+            choice = welcome()
+            main(choice)
+        elif cmd == "ls":
+            while True:
+                file_input = input("Wanna use file?(y/n): ")
+                if file_input not in ['n', 'y']:
+                    print("Invalid input.")
+                elif file_input == 'n':
+                    p = subprocess.Popen(['ls'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    output = p.communicate()[0].decode()
+                    print("Output:", output)
+                    break
+                elif file_input == "y":
+                    file_name = input("Whats the name of the file?: ")
+                    p = subprocess.Popen(['ls', f'{file_name}'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    output, errors = p.communicate()
+                    output = output.decode('utf-8')
+                    errors = errors.decode('utf-8')
+                    print("Output:", output)
+                    print("Errors:", errors)
+                    break
+            main(choice="2")
+        elif cmd == "ping":
+            web_input = input("Which website would you like to ping?(example: google.com): ")
+            p = subprocess.Popen(["ping", f"{web_input}"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            for line in iter(p.stdout.readline, 'b'):
+                if "icmp_seq=16" in str(line):
+                    break
+                else:
+                    print(line.decode('utf-8'), end='')
+
+            p.stdout.close()
+            p.wait()
+            main(choice="2")
 
 
 main(choice)
