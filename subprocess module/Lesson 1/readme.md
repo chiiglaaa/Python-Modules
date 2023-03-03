@@ -5,32 +5,32 @@
 used functions in this lesson:
 
     subprocess.run() - this function is used to run a command as a subprocess and capture its output, exit status,
- and any errors that occur during execution.
+    and any errors that occur during execution.
     
     .PIPE - In Unix-like operating systems, a pipe is a mechanism for inter-process communication(IPC) that
- allows the output of one process to be directed as input to another process. A pipe is represented by the "|" symbol
- and can be used to chain together multiple commands or processes so that the output of one is passed as input to the
- next.(for example these two commands: "ps aux" and "grep user" would look like this: "ps aux | grep user")
+    allows the output of one process to be directed as input to another process. A pipe is represented by the "|" symbol
+    and can be used to chain together multiple commands or processes so that the output of one is passed as input to the
+    next.(for example these two commands: "ps aux" and "grep user" would look like this: "ps aux | grep user")
     
     subprocess.Popen() - this function is used to launch a new process and execute a command in a similar way to
- subprocess.run(), but with more control over how the subprocess is launched and how its output is handeled. Unlike
- subprocess.run(), which waits for the command ro complete and returns a 'CompletedProcess' object, subprocess.Popen()
- returns a Popen object that represents the running subprocess and can be used to interact with it in various ways.
+    subprocess.run(), but with more control over how the subprocess is launched and how its output is handeled. Unlike
+    subprocess.run(), which waits for the command ro complete and returns a 'CompletedProcess' object, subprocess.Popen()
+    returns a Popen object that represents the running subprocess and can be used to interact with it in various ways.
     
-    stderr - this stands for "standart error" and is a stream used by a process to write error messages or diagnostics. When a process writes to "stderr", the output is diplayed on the console or redirected to a file separately from "stdout", so that errors and regular output can be distinguished.
-#yes you can use stderr function without stdout function.
-    stdout - stands for "standart output" and is a stream used by a process to write regular output. When a process writes to "stdout", the output is displayed on the console or redirected to a file.
+    stderr - this stands for "standart error" and is a stream used by a process to write error messages or diagnostics. When a process writes to "stderr",     the output is diplayed on the console or redirected to a file separately from "stdout", so that errors and regular output can be distinguished.
+
+    stdout - stands for "standart output" and is a stream used by a process to write regular output. When a process writes to "stdout", the output is           displayed on the console or redirected to a file.
 
     stdin - stands for "standart input" and is a stream used by a process to read input from the user or from a file.
-When a process reads from "stdin", it is reading input that has been redirected from the console or from a file. 
+    When a process reads from "stdin", it is reading input that has been redirected from the console or from a file. 
 
     iter() - is a built-in Python function that takes an iterator(in this case, the readline() method) and a sentinel
- value(in this case, the byte string 'b'''), and returns an iterator that generates the same values as the original
- iterator until the sentinel value is reached.
+    value(in this case, the byte string 'b'''), and returns an iterator that generates the same values as the original
+    iterator until the sentinel value is reached.
     
     #The main difference between subprocess.Popen() and subprocess.run() functions is that subprocess.Popen() offers
-   more flexibility and control over the launched process. 
-  subprocess.run() is a higher-level function that is easier to use.
+    more flexibility and control over the launched process. 
+    subprocess.run() is a higher-level function that is easier to use.
 
 ------------------------------------
 
