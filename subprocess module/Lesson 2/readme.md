@@ -16,6 +16,11 @@ Used functions in this lesson:
                 a convenient way to ensure that your Python code halts when
                 the command it runs fails to execute successfully
 
+    capture_output=True - captures the output of the command that is executed and
+                returns it as bytes. This includes both standart output and 
+                standart error streams. It makes it easy to capture and handle
+                the output of the command in your Python code.
+
     subprocess.CalledProcessError - returns a non-zero exit status. It 
                 provides information about the command that failed, the exit
                 code and any output or errors generataed by the command.
@@ -75,6 +80,7 @@ Output:
 ------------------------------------
 
 Example of subprocess.DEVNULL:
+example 1:
 
     subprocess.run(['echo', 'hello'], stdout=subprocess.DEVNULL)
 
@@ -94,4 +100,3 @@ Example of .communicate():
 Output:
 
     hello
-
