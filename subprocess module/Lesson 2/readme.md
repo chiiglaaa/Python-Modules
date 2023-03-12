@@ -100,3 +100,4 @@ Example of .communicate():
 Output:
 
     hello
+    
