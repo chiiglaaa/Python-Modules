@@ -80,7 +80,6 @@ Output:
 ------------------------------------
 
 Example of subprocess.DEVNULL:
-example 1:
 
     subprocess.run(['echo', 'hello'], stdout=subprocess.DEVNULL)
 
