@@ -92,7 +92,7 @@ is recommended for most use cases.
 
 ------------------------------------
 
-###Example of 'cwd' argument:
+### Example of 'cwd' argument:
 
     import subprocess
     
@@ -102,7 +102,7 @@ This Python code will run the 'ls -l' command in the directory '/home/user'
 
 ------------------------------------
 
-###Example of 'timeout' argument:
+### Example of 'timeout' argument:
 
     import subprocess
     
@@ -117,7 +117,7 @@ exception will be raised after 5 second.
 
 ------------------------------------
 
-###Example of 'encoding' argument:
+### Example of 'encoding' argument:
 
     import subprocess
     
@@ -131,7 +131,7 @@ using print().
 
 ------------------------------------
 
-###Example of 'env' argument:
+### Example of 'env' argument:
 
     import subprocess
     
@@ -142,7 +142,7 @@ environment variable.
 
 ------------------------------------
 
-###Example of 'universal_newline' argument:
+### Example of 'universal_newline' argument:
 
     import subprocess
     
@@ -155,7 +155,7 @@ with the default encoding and universal newline support.
 
 ------------------------------------
 
-###Example of 'input' argument:
+### Example of 'input' argument:
 
     import subprocess
     
@@ -166,7 +166,7 @@ standart input channel.
 
 ------------------------------------
 
-###Example of 'text' argument:
+### Example of 'text' argument:
 
     import subprocess
 
@@ -177,7 +177,7 @@ standart input channel.
 
 ------------------------------------
 
-###Example of 'errors' argument:
+### Example of 'errors' argument:
 
 Lets start with 'strict':
 
