@@ -1,7 +1,5 @@
 #        Lesson 3 of subprocess module in python
 
-------------------------------------
-
 Lets talk about arguments in 'subprocess.run' function.
 'subprocess.run' function runs a command with arguments and waits for it to
 complete. It returns a 'CompletedProcess' instance that represents the result
@@ -90,7 +88,6 @@ is recommended for most use cases.
 
 ##  Examples:
 
-------------------------------------
 
 ### Example of 'cwd' argument:
 
