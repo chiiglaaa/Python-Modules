@@ -84,7 +84,7 @@ is recommended for most use cases.
                used to provide input to the subprocess as a 
                Unicode string.
 
-------------------------------------
+# 
 
 ##  Examples:
 
